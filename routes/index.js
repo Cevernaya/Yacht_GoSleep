@@ -303,7 +303,7 @@ router.route('/roll').post(
         }
         chance--;
         roll(keepArray);
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
+        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
       }
       // res.render('room')
     }
@@ -322,14 +322,14 @@ router.route('/roll').post(
         }
         roll(keepArray);
         chance--;
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
+        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
       }
       // res.render('room')
     }
     else{
-      res.render('room', { p1: p1name, p2: p2name, dice: dice });
+      res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
     }
-    res.render('room', { p1: p1name, p2: p2name, dice: dice });
+    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
   }
 )
 
