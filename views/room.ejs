@@ -10,7 +10,10 @@
         }
         #score {
             width: 300px;
-            border: 2px solid black;
+            border: 3px solid black;
+            border-radius: 4px;
+            margin: 10px;
+            padding: 0;
         }
         #score div {
             display: flex;
@@ -18,17 +21,19 @@
         #score div div {
             display: inline-block;
             width: 100px;
+            height: 25px;
             border: 1px solid black;
             flex: 1;
             text-align: center;
         }
         #dice {
             flex: 1;
-
+            margin: 10px;
             display: flex;
             flex-direction: column;
             padding-top: 50px;
-            background-color: blue;
+            border-radius: 4px;
+            background-color: green;
         }
         #dice div {
             display: flex;
@@ -43,26 +48,48 @@
         #roll {
             margin: 0 auto;
         }
+        #roll input {
+            width: 30px;
+        }
         #roll button {
-            width: 120px;
-            max-height: 40px;
+            width: 60px;
+            height: 40px;
+            border-radius: 15px;
+            border: 1px solid black;
         }
         #chance {
             position: fixed;
-            width: 100px;
+            width: 150px;
             height: 50px;
-            bottom: 20px;
-            right: 30px;
-            background-color: purple;
+            bottom: 30px;
+            right: 50%;
+            transform: translateX(50%);
+            border: 3px solid black;
+            border-radius: 5px;
+            background-color: pink;
+            text-align: center;
+            font-weight: bolder;
+        }
+        .score-backcolor {
+            background-color: bisque;
+            font-weight: bold;
+        }
+        #player-name {
+            background-color: burlywood;
+            height: 52px;
+            vertical-align: top;
+        }
+        #player-name div {
+            height: 50px !important;
         }
     </style> 
 </head>
 <body>
     <div id="score">
-        <div>
-            <div>구분</div>
-            <div>1p : <%= p1 %> </div>
-            <div>2p : <%= p2 %> </div>
+        <div id="player-name">
+            <div><strong>Player</strong><br>ID</div>
+            <div><Strong>1p</Strong><br><%= p1 %></div>
+            <div><strong>2p</strong><br><%= p2 %></div>
         </div>
         <div>
             <div>1</div>
@@ -94,47 +121,47 @@
             <div>0</div>
             <div>0</div>
         </div>
-        <div>
-            <div>bonus</div>
+        <div class="score-backcolor">
+            <div>Bonus</div>
+            <div>0</div>
+            <div>0</div>
+        </div>
+        <div class="score-backcolor">
+            <div>Subtotal</div>
             <div>0</div>
             <div>0</div>
         </div>
         <div>
-            <div>subtotal</div>
+            <div>Choice</div>
             <div>0</div>
             <div>0</div>
         </div>
         <div>
-            <div>choice</div>
+            <div>4 of kind</div>
             <div>0</div>
             <div>0</div>
         </div>
         <div>
-            <div>4kind</div>
+            <div>Full house</div>
             <div>0</div>
             <div>0</div>
         </div>
         <div>
-            <div>full</div>
+            <div>s-Straight</div>
             <div>0</div>
             <div>0</div>
         </div>
         <div>
-            <div>ss</div>
+            <div>L-Straight</div>
             <div>0</div>
             <div>0</div>
         </div>
         <div>
-            <div>Ls</div>
+            <div>YACHT</div>
             <div>0</div>
             <div>0</div>
         </div>
-        <div>
-            <div>Ya</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
+        <div class="score-backcolor">
             <div>Total</div>
             <div>0</div>
             <div>0</div>
@@ -142,11 +169,11 @@
     </div>
     <div id="dice">
         <div>
-            <div>dice1<br><%= dice[0] %></div>
-            <div>dice2<br><%= dice[1] %></div>
-            <div>dice3<br><%= dice[2] %></div>
-            <div>dice4<br><%= dice[3] %></div>
-            <div>dice5<br><%= dice[4] %></div>
+            <div>dice<br><%= dice[0] %></div>
+            <div>dice<br><%= dice[1] %></div>
+            <div>dice<br><%= dice[2] %></div>
+            <div>dice<br><%= dice[3] %></div>
+            <div>dice<br><%= dice[4] %></div>
         </div>
         <div id="roll">
             <form action="/roll" method="POST">
@@ -155,12 +182,12 @@
                 <input type="text" name="keepArray" value="0">
                 <input type="text" name="keepArray" value="0">
                 <input type="text" name="keepArray" value="0">
-                <button>roll</button>
+                <button>Roll</button>
             </form>
         </div>
     </div>
     <div id="chance">
-        <p>Chance left : <!--남은 횟수--></p>
+        <p>Chance left : <%= chance %></p>
     </div>
 </body>
 </html>

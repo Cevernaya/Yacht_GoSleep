@@ -260,7 +260,7 @@ router.route('/join').post(
   function (req, res) {
     if(nowPlayerNum < 2) {
       if(req.session.user){
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
+        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
         return;
       }
       else{
@@ -274,7 +274,7 @@ router.route('/join').post(
           "id": nowPlayerNum,
           "name": req.body.id
         }
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
+        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
         nowPlayerNum++;
         return;
       }
