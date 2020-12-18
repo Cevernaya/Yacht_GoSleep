@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>YACHT!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: black;
+            color: white;
+            margin: 5px;
+        }
+        header {
+            width: fit-content;
+            font-size: 36px;
+        }
+        .hcenter-align {
+            margin: auto;
+        }
+        body fieldset {
+            width: 400px;
+            padding: 10px;
+            position: relative;
+        }
+        body main input {
+            width: 300px;
+            vertical-align: top;
+        }
+        body main button {
+            position: absolute;
+            right: 10px;
+            vertical-align: top;
+        }
+        #player {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <header class="hcenter-align">
+        Online YACHT
+    </header>
+    <main>
+        <div id="player" class="hcenter-align">
+            <span>현재 참여자 : <%= playerNum %></span>
+        </div>
+        <fieldset class="hcenter-align">
+            <form action="/join" method="post">
+                <input name="id" placeholder="ID">
+                <button>Join</button>
+            </form>
+        </fieldset>
+    </main>
+</body>
+</html>
