@@ -43,7 +43,14 @@
         #dice div div {
             max-width: 100px;
             height: 100px;
+            font-size: 44px;
+            line-height: 95px;
+            font-weight: 900;
             background-color: white;    
+        }
+        #turn {
+            background-color: rgb(255,140,60) !important;
+            line-height: 49px;
         }
         #roll {
             margin: 0 auto;
@@ -91,7 +98,7 @@
 <body>
     <div id="score">
         <div id="player-name">
-            <div><strong>Player</strong><br>ID</div>
+            <div id="turn"><strong>Turn : </strong><%= turn %></div>
             <div><Strong>1p</Strong><br><%= p1 %></div>
             <div><strong>2p</strong><br><%= p2 %></div>
         </div>
@@ -317,11 +324,11 @@
     </div>
     <div id="dice">
         <div>
-            <div>dice<br><%= dice[0] %></div>
-            <div>dice<br><%= dice[1] %></div>
-            <div>dice<br><%= dice[2] %></div>
-            <div>dice<br><%= dice[3] %></div>
-            <div>dice<br><%= dice[4] %></div>
+            <div><%= dice[0] %></div>
+            <div><%= dice[1] %></div>
+            <div><%= dice[2] %></div>
+            <div><%= dice[3] %></div>
+            <div><%= dice[4] %></div>
         </div>
         <div id="roll">
             <form action="/roll" method="POST">
