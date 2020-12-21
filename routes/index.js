@@ -22,7 +22,7 @@ var bonus = [0, 0];
 var subTotal = [0, 0];
 var total = [0, 0];
 
-var dice = [-1, -1, -1, -1, -1];
+var dice = [];
 
 var chance = 3;
 
@@ -98,6 +98,9 @@ function calcScore() {
   var choiceScore = 0;
   for(var i=0; i<5; i++){
     choiceScore += dice[i];
+  }
+  if(isNaN(choiceScore)) {
+    choiceScore = 0
   }
 
   var numNum = [0, 0, 0, 0, 0, 0];
