@@ -15,6 +15,7 @@ for(var i=0; i<12; i++){
   score[0][i] = -1;
   score[1][i] = -1;
 }
+// score[1] = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
 
 var bonus = [0, 0];
 
@@ -212,8 +213,12 @@ function updateSubTotal () {
   var p1SubTotal = 0;
   var p2SubTotal = 0;
   for(var i=0; i<6; i++){
-    p1SubTotal += score[0][i];
-    p2SubTotal += score[1][i];
+    if(score[0][i] != -1){
+      p1SubTotal += score[0][i];
+    }
+    if(score[1][i] != -1){
+      p2SubTotal += score[1][i];
+    }
   }
   subTotal[0] = p1SubTotal;
   subTotal[1] = p2SubTotal;
@@ -223,20 +228,27 @@ function updateTotal () {
   var p1Total = 0;
   var p2Total = 0;
   for(var i=0; i<12; i++){
-    p1Total += score[0][i];
-    p2Total += score[1][i];
+    if(score[0][i] != -1){
+      p1Total += score[0][i];
+    }
+    if(score[1][i] != -1){
+      p2Total += score[1][i];
+    }
   }
   p1Total += bonus[0];
   p2Total += bonus[1];
+
+  total[0] = p1Total;
+  total[1] = p2Total;
 }
 
 function setScore(num){
   expectedScore = calcScore()
-  if(score[turn % 2 - 1][num] != -1) {
+  if(score[(turn + 1) % 2][num] != -1) {
     return;
   }
 
-  score[turn % 2 - 1][num] = expectedScore[num];
+  score[(turn + 1) % 2][num] = expectedScore[num];
   
   updateBonus();
   updateSubTotal();
@@ -326,9 +338,22 @@ router.route('/roll').post(
   }
 )
 
+router.route('/setScore/:scoreNum').get(
+  function (req, res) {
+    if(req.session.user.name == p1name && turn%2 == 1) {  // player 1
+      setScore(req.params.scoreNum)
+    }
+    else if (req.session.user.name == p2name && turn%2 == 0) {  // player 2
+      setScore(req.params.scoreNum)
+    }
+    console.log(score)
+    res.redirect('/room')
+  }
+)
+
 router.route('/room').get(
   function (req, res) {
-    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
+    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score: score, subTotal, total, bonus });
   }
 )
 
