@@ -260,8 +260,6 @@ router.route('/join').post(
   function (req, res) {
     if(nowPlayerNum < 2) {
       if(req.session.user){
-        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
-        return;
       }
       else{
         if(nowPlayerNum == 0){
@@ -274,15 +272,10 @@ router.route('/join').post(
           "id": nowPlayerNum,
           "name": req.body.id
         }
-        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
         nowPlayerNum++;
-        return;
       }
     }
-    else{
-      res.render('maypeople');
-      return;
-    }
+    res.redirect('/room')
   }
 );
 
@@ -303,7 +296,7 @@ router.route('/roll').post(
         }
         chance--;
         roll(keepArray);
-        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
+        res.redirect('/room')
       }
       // res.render('room')
     }
@@ -322,28 +315,21 @@ router.route('/roll').post(
         }
         roll(keepArray);
         chance--;
-        res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
+        res.redirect('/room')
       }
       // res.render('room')
     }
     else{
-      res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
+      res.redirect('/room')
     }
+    res.redirect('/room')
+  }
+)
+
+router.route('/room').get(
+  function (req, res) {
     res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
   }
 )
 
 module.exports = router;
-
-router.route('/tempMain').get(
-  function(req,res) {
-    res.render('temp')
-    return
-  }
-)
-
-router.route('/temp').post(
-  function (req, res) {
-    console.log(req.body)
-  }
-)
