@@ -353,7 +353,7 @@ router.route('/setScore/:scoreNum').get(
 
 router.route('/room').get(
   function (req, res) {
-    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score: score, subTotal, total, bonus });
+    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score, calcScore: calcScore(), subTotal, total, bonus, turn });
   }
 )
 
