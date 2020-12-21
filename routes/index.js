@@ -232,11 +232,11 @@ function updateTotal () {
 
 function setScore(num){
   expectedScore = calcScore()
-  if(score[turn % 2 - 1][num] != -1) {
+  if(score[(turn + 1) % 2][num] != -1) {
     return;
   }
 
-  score[turn % 2 - 1][num] = expectedScore[num];
+  score[(turn + 1) % 2][num] = expectedScore[num];
   
   updateBonus();
   updateSubTotal();
@@ -341,7 +341,7 @@ router.route('/setScore/:scoreNum').get(
 
 router.route('/room').get(
   function (req, res) {
-    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
+    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score: score });
   }
 )
 
