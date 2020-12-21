@@ -326,6 +326,19 @@ router.route('/roll').post(
   }
 )
 
+router.route('/setScore/:scoreNum').get(
+  function (req, res) {
+    if(req.session.user.name == p1name && turn%2 == 1) {  // player 1
+      setScore(req.params.scoreNum)
+    }
+    else if (req.session.user.name == p2name && turn%2 == 0) {  // player 2
+      setScore(req.params.scoreNum)
+    }
+    console.log(score)
+    res.redirect('/room')
+  }
+)
+
 router.route('/room').get(
   function (req, res) {
     res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance });
