@@ -353,7 +353,8 @@ router.route('/setScore/:scoreNum').get(
 
 router.route('/room').get(
   function (req, res) {
-    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score, calcScore: calcScore(), subTotal, total, bonus, turn });
+    calcScoreDummy = (turn%2==0) ? [new Array(12), calcScore()] : [calcScore(), new Array(12)]
+    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score, calcScoreDummy, subTotal, total, bonus, turn });
   }
 )
 
