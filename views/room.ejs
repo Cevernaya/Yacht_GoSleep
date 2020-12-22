@@ -8,13 +8,34 @@
             display: flex;
             margin: 0;
             position: relative;
+            flex-direction: column;
+        }
+        header {
+            margin: 10px 20px 0 20px;
+            height: 100px;
+            text-align: center;
+            border: 3px solid black;
+            border-radius: 4px;
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: 30px;
+            background-color: beige;
+        }
+        #main {
+            display: flex;
+        }
+        #aside {
+            margin-left: 10px;
+            padding: 10px;
+            width: 306px;
         }
         #score {
             width: 300px;
             border: 3px solid black;
             border-radius: 4px;
-            margin: 10px;
+            margin-bottom: 10px;
             padding: 0;
+            background-color: white;
         }
         #score div {
             display: flex;
@@ -29,7 +50,7 @@
         }
         #dice {
             flex: 1;
-            margin: 10px;
+            margin: 10px 20px 10px 10px;
             display: flex;
             flex-direction: column;
             padding-top: 50px;
@@ -47,11 +68,12 @@
             font-size: 44px;
             line-height: 95px;
             font-weight: 900;
+            border-radius: 10px;
             background-color: white;
             cursor: pointer;    
         }
         #turn {
-            background-color: rgb(255,140,60) !important;
+            background-color: rgb(255,140,60);
             line-height: 49px;
         }
         #roll {
@@ -62,23 +84,28 @@
             display: none;
         }
         #roll button {
-            width: 60px;
-            height: 40px;
+            width: 160px;
+            height: 100px;
+            font-size: 40px;
+            font-weight: 700;
             border-radius: 15px;
-            border: 1px solid black;
+            border: 3px solid black;
+            cursor: pointer;
         }
         #chance {
-            position: fixed;
-            width: 150px;
+            width: 300px;
             height: 50px;
             bottom: 30px;
-            right: 50%;
-            transform: translateX(50%);
             border: 3px solid black;
             border-radius: 5px;
             background-color: pink;
+            font-size: 24px;
             text-align: center;
             font-weight: bolder;
+        }
+        #chance p {
+            margin: 0;
+            line-height: 50px
         }
         .score-backcolor {
             background-color: bisque;
@@ -93,7 +120,7 @@
             height: 50px !important;
         }
         .score {
-            color: gray;
+            color: rgb(200,200,200);
             text-decoration: none;
         }
         #hover-end {
@@ -107,6 +134,7 @@
             background-color: blanchedalmond;
             border-radius: 4px;
             border: 2px solid rgb(255,140,60);
+            box-shadow: 0 0 0 10000px rgba(0,0,0,.5);
         }
         #hover-winner {
             font-size: 72px;
@@ -125,283 +153,288 @@
     </style> 
 </head>
 <body>
-    <div id="score">
-        <div id="player-name">
-            <div id="turn"><strong>Turn : </strong><%= turn %></div>
-            <div><Strong>1p</Strong><br><%= p1 %></div>
-            <div><strong>2p</strong><br><%= p2 %></div>
+    <header>YACHT</header>
+    <div id="main">
+        <div id="aside">
+            <div id="score">
+                <div id="player-name">
+                    <div id="turn"><strong>Turn : </strong><%= turn %></div>
+                    <div><Strong>1p</Strong><br><%= p1 %></div>
+                    <div><strong>2p</strong><br><%= p2 %></div>
+                </div>
+                <div>
+                    <div>1</div>
+                    <div>
+                        <% if (score[0][0] == -1) { %>
+                            <a class="score" href="/setScore/0"><span><%= calcScoreDummy[0][0] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][0] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][0] == -1) { %>
+                            <a class="score" href="/setScore/0"><span><%= calcScoreDummy[1][0] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][0] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>2</div>
+                    <div>
+                        <% if (score[0][1] == -1) { %>
+                            <a class="score" href="/setScore/1"><span><%= calcScoreDummy[0][1] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][1] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][1] == -1) { %>
+                            <a class="score" href="/setScore/1"><span><%= calcScoreDummy[1][1] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][1] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>3</div>
+                    <div>
+                        <% if (score[0][2] == -1) { %>
+                            <a class="score" href="/setScore/2"><span><%= calcScoreDummy[0][2] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][2] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][2] == -1) { %>
+                            <a class="score" href="/setScore/2"><span><%= calcScoreDummy[1][2] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][2] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>4</div>
+                    <div>
+                        <% if (score[0][3] == -1) { %>
+                            <a class="score" href="/setScore/3"><span><%= calcScoreDummy[0][3] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][3] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][3] == -1) { %>
+                            <a class="score" href="/setScore/3"><span><%= calcScoreDummy[1][3] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][3] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>5</div>
+                    <div>
+                        <% if (score[0][4] == -1) { %>
+                            <a class="score" href="/setScore/4"><span><%= calcScoreDummy[0][4] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][4] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][4] == -1) { %>
+                            <a class="score" href="/setScore/4"><span><%= calcScoreDummy[1][4] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][4] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>6</div>
+                    <div>
+                        <% if (score[0][5] == -1) { %>
+                            <a class="score" href="/setScore/5"><span><%= calcScoreDummy[0][5] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][5] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][5] == -1) { %>
+                            <a class="score" href="/setScore/5"><span><%= calcScoreDummy[1][5] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][5] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="score-backcolor">
+                    <div>Bonus</div>
+                    <div><%= bonus[0] %></div>
+                    <div><%= bonus[1] %></div>
+                </div>
+                <div class="score-backcolor">
+                    <div>Subtotal</div>
+                    <div><%= subTotal[0] %></div>
+                    <div><%= subTotal[1] %></div>
+                </div>
+                <div>
+                    <div>Choice</div>
+                    <div>
+                        <% if (score[0][6] == -1) { %>
+                            <a class="score" href="/setScore/6"><span><%= calcScoreDummy[0][6] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][6] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][6] == -1) { %>
+                            <a class="score" href="/setScore/6"><span><%= calcScoreDummy[1][6] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][6] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>4 of kind</div>
+                    <div>
+                        <% if (score[0][7] == -1) { %>
+                            <a class="score" href="/setScore/7"><span><%= calcScoreDummy[0][7] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][7] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][7] == -1) { %>
+                            <a class="score" href="/setScore/7"><span><%= calcScoreDummy[1][7] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][7] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>Full house</div>
+                    <div>
+                        <% if (score[0][8] == -1) { %>
+                            <a class="score" href="/setScore/8"><span><%= calcScoreDummy[0][8] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][8] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][8] == -1) { %>
+                            <a class="score" href="/setScore/8"><span><%= calcScoreDummy[1][8] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][8] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>s-Straight</div>
+                    <div>
+                        <% if (score[0][9] == -1) { %>
+                            <a class="score" href="/setScore/9"><span><%= calcScoreDummy[0][9] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][9] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][9] == -1) { %>
+                            <a class="score" href="/setScore/9"><span><%= calcScoreDummy[1][9] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][9] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>L-Straight</div>
+                    <div>
+                        <% if (score[0][10] == -1) { %>
+                            <a class="score" href="/setScore/10"><span><%= calcScoreDummy[0][10] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][10] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][10] == -1) { %>
+                            <a class="score" href="/setScore/10"><span><%= calcScoreDummy[1][10] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][10] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>YACHT</div>
+                    <div>
+                        <% if (score[0][11] == -1) { %>
+                            <a class="score" href="/setScore/11"><span><%= calcScoreDummy[0][11] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][11] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][11] == -1) { %>
+                            <a class="score" href="/setScore/11"><span><%= calcScoreDummy[1][11] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][11] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="score-backcolor">
+                    <div>Total</div>
+                    <div><%= total[0] %></div>
+                    <div><%= total[1] %></div>
+                </div>
+            </div>
+            <div id="chance">
+                <p>Chance left : <%= chance %></p>
+            </div>
         </div>
-        <div>
-            <div>1</div>
+        <div id="dice">
             <div>
-                <% if (score[0][0] == -1) { %>
-                    <a class="score" href="/setScore/0"><span><%= calcScoreDummy[0][0] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][0] %></span>
-                <% } %>
+                <div class="dice" onclick="keepdice(0)"><%= dice[0] %></div>
+                <div class="dice" onclick="keepdice(1)"><%= dice[1] %></div>
+                <div class="dice" onclick="keepdice(2)"><%= dice[2] %></div>
+                <div class="dice" onclick="keepdice(3)"><%= dice[3] %></div>
+                <div class="dice" onclick="keepdice(4)"><%= dice[4] %></div>
             </div>
-            <div>
-                <% if (score[1][0] == -1) { %>
-                    <a class="score" href="/setScore/0"><span><%= calcScoreDummy[1][0] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][0] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>2</div>
-            <div>
-                <% if (score[0][1] == -1) { %>
-                    <a class="score" href="/setScore/1"><span><%= calcScoreDummy[0][1] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][1] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][1] == -1) { %>
-                    <a class="score" href="/setScore/1"><span><%= calcScoreDummy[1][1] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][1] %></span>
-                <% } %>
+            <div id="roll">
+                <form id="roll-form" action="/roll" method="POST">
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                </form>
+                <button id="roll-btn">Roll</button>
             </div>
         </div>
-        <div>
-            <div>3</div>
-            <div>
-                <% if (score[0][2] == -1) { %>
-                    <a class="score" href="/setScore/2"><span><%= calcScoreDummy[0][2] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][2] %></span>
-                <% } %>
+        <% if (turn == 25) { %>
+            <div id="hover-end">
+                <div id="hover-winner">
+                    <% if (total[0] == total[1]) { %>
+                        <span>DRAW!</span>
+                    <% } else { %>
+                        <span>WINNER!</span>
+                    <% } %>
+                </div>
+                <div id="hover-id">hedhogeg
+                    <% if (total[0] > total[1]) { %>
+                        <span><%= p1 %></span>
+                    <% } else if (total[1] > total[0]) { %>
+                        <span><%= p2 %></span>
+                    <% } else if (total[0] == total[1]) { %>
+                        
+                    <% } %>
+                </div>
+                <div id="hover-score">
+                    <% if (total[0] > total[1]) { %>
+                        <span>score: <%= total[0] %></span>
+                    <% } else if (total[1] > total[0]) { %>
+                        <span>score: <%= total[1] %></span>
+                    <% } else if (total[0] == total[1]) { %>
+                        <span>score: <%= total[0] %></span>
+                    <% } %>
+                </div>
             </div>
-            <div>
-                <% if (score[1][2] == -1) { %>
-                    <a class="score" href="/setScore/2"><span><%= calcScoreDummy[1][2] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][2] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>4</div>
-            <div>
-                <% if (score[0][3] == -1) { %>
-                    <a class="score" href="/setScore/3"><span><%= calcScoreDummy[0][3] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][3] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][3] == -1) { %>
-                    <a class="score" href="/setScore/3"><span><%= calcScoreDummy[1][3] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][3] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>5</div>
-            <div>
-                <% if (score[0][4] == -1) { %>
-                    <a class="score" href="/setScore/4"><span><%= calcScoreDummy[0][4] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][4] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][4] == -1) { %>
-                    <a class="score" href="/setScore/4"><span><%= calcScoreDummy[1][4] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][4] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>6</div>
-            <div>
-                <% if (score[0][5] == -1) { %>
-                    <a class="score" href="/setScore/5"><span><%= calcScoreDummy[0][5] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][5] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][5] == -1) { %>
-                    <a class="score" href="/setScore/5"><span><%= calcScoreDummy[1][5] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][5] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div class="score-backcolor">
-            <div>Bonus</div>
-            <div><%= bonus[0] %></div>
-            <div><%= bonus[1] %></div>
-        </div>
-        <div class="score-backcolor">
-            <div>Subtotal</div>
-            <div><%= subTotal[0] %></div>
-            <div><%= subTotal[1] %></div>
-        </div>
-        <div>
-            <div>Choice</div>
-            <div>
-                <% if (score[0][6] == -1) { %>
-                    <a class="score" href="/setScore/6"><span><%= calcScoreDummy[0][6] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][6] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][6] == -1) { %>
-                    <a class="score" href="/setScore/6"><span><%= calcScoreDummy[1][6] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][6] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>4 of kind</div>
-            <div>
-                <% if (score[0][7] == -1) { %>
-                    <a class="score" href="/setScore/7"><span><%= calcScoreDummy[0][7] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][7] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][7] == -1) { %>
-                    <a class="score" href="/setScore/7"><span><%= calcScoreDummy[1][7] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][7] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>Full house</div>
-            <div>
-                <% if (score[0][8] == -1) { %>
-                    <a class="score" href="/setScore/8"><span><%= calcScoreDummy[0][8] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][8] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][8] == -1) { %>
-                    <a class="score" href="/setScore/8"><span><%= calcScoreDummy[1][8] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][8] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>s-Straight</div>
-            <div>
-                <% if (score[0][9] == -1) { %>
-                    <a class="score" href="/setScore/9"><span><%= calcScoreDummy[0][9] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][9] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][9] == -1) { %>
-                    <a class="score" href="/setScore/9"><span><%= calcScoreDummy[1][9] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][9] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>L-Straight</div>
-            <div>
-                <% if (score[0][10] == -1) { %>
-                    <a class="score" href="/setScore/10"><span><%= calcScoreDummy[0][10] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][10] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][10] == -1) { %>
-                    <a class="score" href="/setScore/10"><span><%= calcScoreDummy[1][10] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][10] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div>
-            <div>YACHT</div>
-            <div>
-                <% if (score[0][11] == -1) { %>
-                    <a class="score" href="/setScore/11"><span><%= calcScoreDummy[0][11] %></span></a>
-                <% } else { %>
-                    <span><%= score[0][11] %></span>
-                <% } %>
-            </div>
-            <div>
-                <% if (score[1][11] == -1) { %>
-                    <a class="score" href="/setScore/11"><span><%= calcScoreDummy[1][11] %></span></a>
-                <% } else { %>
-                    <span><%= score[1][11] %></span>
-                <% } %>
-            </div>
-        </div>
-        <div class="score-backcolor">
-            <div>Total</div>
-            <div><%= total[0] %></div>
-            <div><%= total[1] %></div>
-        </div>
+        <% } %>
     </div>
-    <div id="dice">
-        <div>
-            <div class="dice" onclick="keepdice(0)"><%= dice[0] %></div>
-            <div class="dice" onclick="keepdice(1)"><%= dice[1] %></div>
-            <div class="dice" onclick="keepdice(2)"><%= dice[2] %></div>
-            <div class="dice" onclick="keepdice(3)"><%= dice[3] %></div>
-            <div class="dice" onclick="keepdice(4)"><%= dice[4] %></div>
-        </div>
-        <div id="roll">
-            <form id="roll-form" action="/roll" method="POST">
-                <input type="text" name="keepArray" value=0>
-                <input type="text" name="keepArray" value=0>
-                <input type="text" name="keepArray" value=0>
-                <input type="text" name="keepArray" value=0>
-                <input type="text" name="keepArray" value=0>
-            </form>
-            <button id="roll-btn">Roll</button>
-        </div>
-    </div>
-    <div id="chance">
-        <p>Chance left : <%= chance %></p>
-    </div>
-    <% if (turn == 25) { %>
-        <div id="hover-end">
-            <div id="hover-winner">
-                <% if (total[0] == total[1]) { %>
-                    <span>DRAW!</span>
-                <% } else { %>
-                    <span>WINNER!</span>
-                <% } %>
-            </div>
-            <div id="hover-id">
-                <% if (total[0] > total[1]) { %>
-                    <span><%= p1 %></span>
-                <% } else if (total[1] > total[0]) { %>
-                    <span><%= p2 %></span>
-                <% } else if (total[0] == total[1]) { %>
-                    
-                <% } %>
-            </div>
-            <div id="hover-score">
-                <% if (total[0] > total[1]) { %>
-                    <span>score: <%= total[0] %></span>
-                <% } else if (total[1] > total[0]) { %>
-                    <span>score: <%= total[1] %></span>
-                <% } else if (total[0] == total[1]) { %>
-                    <span>score: <%= total[0] %></span>
-                <% } %>
-            </div>
-        </div>
-    <% } %>
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
