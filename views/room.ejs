@@ -7,6 +7,7 @@
         body {
             display: flex;
             margin: 0;
+            position: relative;
         }
         #score {
             width: 300px;
@@ -94,6 +95,32 @@
         .score {
             color: gray;
             text-decoration: none;
+        }
+        #hover-end {
+            width: 500px;
+            height: 300px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            background-color: blanchedalmond;
+            border-radius: 4px;
+            border: 2px solid rgb(255,140,60);
+        }
+        #hover-winner {
+            font-size: 72px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #hover-id {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 46px;
+        }
+        #hover-score {
+            font-size: 24px;
+            text-align: center;
         }
     </style> 
 </head>
@@ -346,6 +373,35 @@
     <div id="chance">
         <p>Chance left : <%= chance %></p>
     </div>
+    <% if (turn == 25) { %>
+        <div id="hover-end">
+            <div id="hover-winner">
+                <% if (total[0] == total[1]) { %>
+                    <span>DRAW!</span>
+                <% } else { %>
+                    <span>WINNER!</span>
+                <% } %>
+            </div>
+            <div id="hover-id">
+                <% if (total[0] > total[1]) { %>
+                    <span><%= p1 %></span>
+                <% } else if (total[1] > total[0]) { %>
+                    <span><%= p2 %></span>
+                <% } else if (total[0] == total[1]) { %>
+                    
+                <% } %>
+            </div>
+            <div id="hover-score">
+                <% if (total[0] > total[1]) { %>
+                    <span>score: <%= total[0] %></span>
+                <% } else if (total[1] > total[0]) { %>
+                    <span>score: <%= total[1] %></span>
+                <% } else if (total[0] == total[1]) { %>
+                    <span>score: <%= total[0] %></span>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
 </body>
 <script>
     function keepdice(index) {  
