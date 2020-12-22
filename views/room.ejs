@@ -46,7 +46,8 @@
             font-size: 44px;
             line-height: 95px;
             font-weight: 900;
-            background-color: white;    
+            background-color: white;
+            cursor: pointer;    
         }
         #turn {
             background-color: rgb(255,140,60) !important;
@@ -57,6 +58,7 @@
         }
         #roll input {
             width: 30px;
+            display: none;
         }
         #roll button {
             width: 60px;
@@ -324,19 +326,19 @@
     </div>
     <div id="dice">
         <div>
-            <div><%= dice[0] %></div>
-            <div><%= dice[1] %></div>
-            <div><%= dice[2] %></div>
-            <div><%= dice[3] %></div>
-            <div><%= dice[4] %></div>
+            <div class="dice" onclick="keepdice(0)"><%= dice[0] %></div>
+            <div class="dice" onclick="keepdice(1)"><%= dice[1] %></div>
+            <div class="dice" onclick="keepdice(2)"><%= dice[2] %></div>
+            <div class="dice" onclick="keepdice(3)"><%= dice[3] %></div>
+            <div class="dice" onclick="keepdice(4)"><%= dice[4] %></div>
         </div>
         <div id="roll">
             <form action="/roll" method="POST">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
+                <input type="text" name="keepArray" value=0>
+                <input type="text" name="keepArray" value=0>
+                <input type="text" name="keepArray" value=0>
+                <input type="text" name="keepArray" value=0>
+                <input type="text" name="keepArray" value=0>
                 <button>Roll</button>
             </form>
         </div>
@@ -345,4 +347,18 @@
         <p>Chance left : <%= chance %></p>
     </div>
 </body>
+<script>
+    function keepdice(index) {  
+        var temp = document.getElementsByName("keepArray")[index]
+        var temp2 = document.getElementsByClassName("dice")[index]
+        if (temp.value == 0) {
+            temp.value = 1
+            temp2.setAttribute("style","background-color: coral")
+        }
+        else {
+            temp.value = 0
+            temp2.setAttribute("style","")
+        }
+    }
+</script>
 </html>
