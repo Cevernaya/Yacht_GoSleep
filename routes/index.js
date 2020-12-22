@@ -1,6 +1,4 @@
 var express = require('express');
-const session = require('express-session');
-const { set } = require('../app');
 var router = express.Router();
 
 var nowPlayerNum = 0;

@@ -333,20 +333,22 @@
             <div class="dice" onclick="keepdice(4)"><%= dice[4] %></div>
         </div>
         <div id="roll">
-            <form action="/roll" method="POST">
+            <form id="roll-form" action="/roll" method="POST">
                 <input type="text" name="keepArray" value=0>
                 <input type="text" name="keepArray" value=0>
                 <input type="text" name="keepArray" value=0>
                 <input type="text" name="keepArray" value=0>
                 <input type="text" name="keepArray" value=0>
-                <button>Roll</button>
             </form>
+            <button id="roll-btn">Roll</button>
         </div>
     </div>
     <div id="chance">
         <p>Chance left : <%= chance %></p>
     </div>
 </body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
     function keepdice(index) {  
         var temp = document.getElementsByName("keepArray")[index]
@@ -360,5 +362,21 @@
             temp2.setAttribute("style","")
         }
     }
+    $(function () {
+        var socket = io()
+            $('#roll-btn').click(function(e) {
+                e.preventDefault()
+                socket.emit('refresh')
+                // setTimeout(() => {socket.emit('refresh')}, 500)
+                document.getElementById('roll-form').submit()
+                return false
+            })
+            $('a').click(function(e) {
+                socket.emit('refresh')
+            })
+            socket.on('refresh', function(){
+                location.reload()
+            })
+    })
 </script>
 </html>
