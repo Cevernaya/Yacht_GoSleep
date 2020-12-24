@@ -7,10 +7,24 @@
         body {
             display: flex;
             margin: 0;
+            position: relative;
+            flex-direction: column;
+        }
+        #main {
+            display: flex;
+        }
+        #aside {
+            margin-left: 10px;
+            padding: 10px;
+            width: 306px;
         }
         #score {
             width: 300px;
-            border: 2px solid black;
+            border: 3px solid black;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 0;
+            background-color: white;
         }
         #score div {
             display: flex;
@@ -18,17 +32,19 @@
         #score div div {
             display: inline-block;
             width: 100px;
+            height: 25px;
             border: 1px solid black;
             flex: 1;
             text-align: center;
         }
         #dice {
             flex: 1;
-
+            margin: 10px 20px 10px 10px;
             display: flex;
             flex-direction: column;
             padding-top: 50px;
-            background-color: blue;
+            border-radius: 4px;
+            background-color: green;
         }
         #dice div {
             display: flex;
@@ -38,129 +54,406 @@
         #dice div div {
             max-width: 100px;
             height: 100px;
-            background-color: white;    
+            font-size: 44px;
+            line-height: 95px;
+            font-weight: 900;
+            border-radius: 10px;
+            background-color: white;
+            cursor: pointer;    
+        }
+        #turn {
+            background-color: rgb(255,140,60);
+            line-height: 49px;
         }
         #roll {
             margin: 0 auto;
         }
+        #roll input {
+            width: 30px;
+            display: none;
+        }
         #roll button {
-            width: 120px;
-            max-height: 40px;
+            width: 160px;
+            height: 100px;
+            font-size: 40px;
+            font-weight: 700;
+            border-radius: 15px;
+            border: 3px solid black;
+            cursor: pointer;
         }
         #chance {
-            position: fixed;
-            width: 100px;
+            width: 300px;
             height: 50px;
-            bottom: 20px;
-            right: 30px;
-            background-color: purple;
+            bottom: 30px;
+            border: 3px solid black;
+            border-radius: 5px;
+            background-color: pink;
+            font-size: 24px;
+            text-align: center;
+            font-weight: bolder;
+        }
+        #chance p {
+            margin: 0;
+            line-height: 50px
+        }
+        .score-backcolor {
+            background-color: bisque;
+            font-weight: bold;
+        }
+        #player-name {
+            background-color: burlywood;
+            height: 52px;
+            vertical-align: top;
+        }
+        #player-name div {
+            height: 50px !important;
+        }
+        .score {
+            color: rgb(200,200,200);
+            text-decoration: none;
+        }
+        #hover-end {
+            width: 500px;
+            height: 300px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            background-color: blanchedalmond;
+            border-radius: 4px;
+            border: 2px solid rgb(255,140,60);
+            box-shadow: 0 0 0 10000px rgba(0,0,0,.5);
+        }
+        #hover-winner {
+            font-size: 72px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #hover-id {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 46px;
+        }
+        #hover-score {
+            font-size: 24px;
+            text-align: center;
         }
     </style> 
 </head>
 <body>
-    <div id="score">
-        <div>
-            <div>구분</div>
-            <div>1p : <%= p1 %> </div>
-            <div>2p : <%= p2 %> </div>
+    <div id="main">
+        <div id="aside">
+            <div id="score">
+                <div id="player-name">
+                    <div id="turn"><strong>Turn : </strong><%= turn %></div>
+                    <div><Strong>1p</Strong><br><%= p1 %></div>
+                    <div><strong>2p</strong><br><%= p2 %></div>
+                </div>
+                <div>
+                    <div>1</div>
+                    <div>
+                        <% if (score[0][0] == -1) { %>
+                            <a class="score" href="/setScore/0"><span><%= calcScoreDummy[0][0] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][0] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][0] == -1) { %>
+                            <a class="score" href="/setScore/0"><span><%= calcScoreDummy[1][0] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][0] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>2</div>
+                    <div>
+                        <% if (score[0][1] == -1) { %>
+                            <a class="score" href="/setScore/1"><span><%= calcScoreDummy[0][1] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][1] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][1] == -1) { %>
+                            <a class="score" href="/setScore/1"><span><%= calcScoreDummy[1][1] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][1] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>3</div>
+                    <div>
+                        <% if (score[0][2] == -1) { %>
+                            <a class="score" href="/setScore/2"><span><%= calcScoreDummy[0][2] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][2] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][2] == -1) { %>
+                            <a class="score" href="/setScore/2"><span><%= calcScoreDummy[1][2] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][2] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>4</div>
+                    <div>
+                        <% if (score[0][3] == -1) { %>
+                            <a class="score" href="/setScore/3"><span><%= calcScoreDummy[0][3] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][3] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][3] == -1) { %>
+                            <a class="score" href="/setScore/3"><span><%= calcScoreDummy[1][3] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][3] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>5</div>
+                    <div>
+                        <% if (score[0][4] == -1) { %>
+                            <a class="score" href="/setScore/4"><span><%= calcScoreDummy[0][4] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][4] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][4] == -1) { %>
+                            <a class="score" href="/setScore/4"><span><%= calcScoreDummy[1][4] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][4] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>6</div>
+                    <div>
+                        <% if (score[0][5] == -1) { %>
+                            <a class="score" href="/setScore/5"><span><%= calcScoreDummy[0][5] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][5] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][5] == -1) { %>
+                            <a class="score" href="/setScore/5"><span><%= calcScoreDummy[1][5] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][5] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="score-backcolor">
+                    <div>Bonus</div>
+                    <div><%= bonus[0] %></div>
+                    <div><%= bonus[1] %></div>
+                </div>
+                <div class="score-backcolor">
+                    <div>Subtotal</div>
+                    <div><%= subTotal[0] %></div>
+                    <div><%= subTotal[1] %></div>
+                </div>
+                <div>
+                    <div>Choice</div>
+                    <div>
+                        <% if (score[0][6] == -1) { %>
+                            <a class="score" href="/setScore/6"><span><%= calcScoreDummy[0][6] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][6] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][6] == -1) { %>
+                            <a class="score" href="/setScore/6"><span><%= calcScoreDummy[1][6] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][6] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>4 of kind</div>
+                    <div>
+                        <% if (score[0][7] == -1) { %>
+                            <a class="score" href="/setScore/7"><span><%= calcScoreDummy[0][7] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][7] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][7] == -1) { %>
+                            <a class="score" href="/setScore/7"><span><%= calcScoreDummy[1][7] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][7] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>Full house</div>
+                    <div>
+                        <% if (score[0][8] == -1) { %>
+                            <a class="score" href="/setScore/8"><span><%= calcScoreDummy[0][8] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][8] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][8] == -1) { %>
+                            <a class="score" href="/setScore/8"><span><%= calcScoreDummy[1][8] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][8] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>s-Straight</div>
+                    <div>
+                        <% if (score[0][9] == -1) { %>
+                            <a class="score" href="/setScore/9"><span><%= calcScoreDummy[0][9] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][9] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][9] == -1) { %>
+                            <a class="score" href="/setScore/9"><span><%= calcScoreDummy[1][9] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][9] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>L-Straight</div>
+                    <div>
+                        <% if (score[0][10] == -1) { %>
+                            <a class="score" href="/setScore/10"><span><%= calcScoreDummy[0][10] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][10] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][10] == -1) { %>
+                            <a class="score" href="/setScore/10"><span><%= calcScoreDummy[1][10] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][10] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div>
+                    <div>YACHT</div>
+                    <div>
+                        <% if (score[0][11] == -1) { %>
+                            <a class="score" href="/setScore/11"><span><%= calcScoreDummy[0][11] %></span></a>
+                        <% } else { %>
+                            <span><%= score[0][11] %></span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <% if (score[1][11] == -1) { %>
+                            <a class="score" href="/setScore/11"><span><%= calcScoreDummy[1][11] %></span></a>
+                        <% } else { %>
+                            <span><%= score[1][11] %></span>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="score-backcolor">
+                    <div>Total</div>
+                    <div><%= total[0] %></div>
+                    <div><%= total[1] %></div>
+                </div>
+            </div>
+            <div id="chance">
+                <p>Chance left : <%= chance %></p>
+            </div>
         </div>
-        <div>
-            <div>1</div>
-            <div>0</div>
-            <div>0</div>
+        <div id="dice">
+            <div>
+                <div class="dice" onclick="keepdice(0)"><%= dice[0] %></div>
+                <div class="dice" onclick="keepdice(1)"><%= dice[1] %></div>
+                <div class="dice" onclick="keepdice(2)"><%= dice[2] %></div>
+                <div class="dice" onclick="keepdice(3)"><%= dice[3] %></div>
+                <div class="dice" onclick="keepdice(4)"><%= dice[4] %></div>
+            </div>
+            <div id="roll">
+                <form id="roll-form" action="/roll" method="POST">
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                    <input type="text" name="keepArray" value=0>
+                </form>
+                <button id="roll-btn">Roll</button>
+            </div>
         </div>
-        <div>
-            <div>2</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>3</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>4</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>5</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>6</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>bonus</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>subtotal</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>choice</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>4kind</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>full</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>ss</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>Ls</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>Ya</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-        <div>
-            <div>Total</div>
-            <div>0</div>
-            <div>0</div>
-        </div>
-    </div>
-    <div id="dice">
-        <div>
-            <div>dice1<br><%= dice[0] %></div>
-            <div>dice2<br><%= dice[1] %></div>
-            <div>dice3<br><%= dice[2] %></div>
-            <div>dice4<br><%= dice[3] %></div>
-            <div>dice5<br><%= dice[4] %></div>
-        </div>
-        <div id="roll">
-            <form action="/roll" method="POST">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <input type="text" name="keepArray" value="0">
-                <button>roll</button>
-            </form>
-        </div>
-    </div>
-    <div id="chance">
-        <p>Chance left : <!--남은 횟수--></p>
+        <% if (turn == 25) { %>
+            <div id="hover-end">
+                <div id="hover-winner">
+                    <% if (total[0] == total[1]) { %>
+                        <span>DRAW!</span>
+                    <% } else { %>
+                        <span>WINNER!</span>
+                    <% } %>
+                </div>
+                <div id="hover-id">hedhogeg
+                    <% if (total[0] > total[1]) { %>
+                        <span><%= p1 %></span>
+                    <% } else if (total[1] > total[0]) { %>
+                        <span><%= p2 %></span>
+                    <% } else if (total[0] == total[1]) { %>
+                        
+                    <% } %>
+                </div>
+                <div id="hover-score">
+                    <% if (total[0] > total[1]) { %>
+                        <span>score: <%= total[0] %></span>
+                    <% } else if (total[1] > total[0]) { %>
+                        <span>score: <%= total[1] %></span>
+                    <% } else if (total[0] == total[1]) { %>
+                        <span>score: <%= total[0] %></span>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
     </div>
 </body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    function keepdice(index) {  
+        var temp = document.getElementsByName("keepArray")[index]
+        var temp2 = document.getElementsByClassName("dice")[index]
+        if (temp.value == 0) {
+            temp.value = 1
+            temp2.setAttribute("style","background-color: coral")
+        }
+        else {
+            temp.value = 0
+            temp2.setAttribute("style","")
+        }
+    }
+    $(function () {
+        var socket = io()
+            $('#roll-btn').click(function(e) {
+                e.preventDefault()
+                socket.emit('refresh')
+                // setTimeout(() => {socket.emit('refresh')}, 500)
+                document.getElementById('roll-form').submit()
+                return false
+            })
+            $('a').click(function(e) {
+                socket.emit('refresh')
+            })
+            socket.on('refresh', function(){
+                location.reload()
+            })
+    })
+</script>
 </html>

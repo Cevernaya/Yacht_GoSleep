@@ -88,3 +88,16 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// SOCKET
+var io = require('socket.io')(server)
+
+io.on('connection', (socket) => {
+  console.log('a user connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+  socket.on('refresh', () => {
+    setTimeout(() => {socket.broadcast.emit('refresh')}, 200)
+  })
+})

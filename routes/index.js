@@ -1,6 +1,4 @@
 var express = require('express');
-const session = require('express-session');
-const { set } = require('../app');
 var router = express.Router();
 
 var nowPlayerNum = 0;
@@ -15,13 +13,14 @@ for(var i=0; i<12; i++){
   score[0][i] = -1;
   score[1][i] = -1;
 }
+// score[1] = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
 
 var bonus = [0, 0];
 
 var subTotal = [0, 0];
 var total = [0, 0];
 
-var dice = [-1, -1, -1, -1, -1];
+var dice = [];
 
 var chance = 3;
 
@@ -97,6 +96,9 @@ function calcScore() {
   var choiceScore = 0;
   for(var i=0; i<5; i++){
     choiceScore += dice[i];
+  }
+  if(isNaN(choiceScore)) {
+    choiceScore = 0
   }
 
   var numNum = [0, 0, 0, 0, 0, 0];
@@ -212,8 +214,12 @@ function updateSubTotal () {
   var p1SubTotal = 0;
   var p2SubTotal = 0;
   for(var i=0; i<6; i++){
-    p1SubTotal += score[0][i];
-    p2SubTotal += score[1][i];
+    if(score[0][i] != -1){
+      p1SubTotal += score[0][i];
+    }
+    if(score[1][i] != -1){
+      p2SubTotal += score[1][i];
+    }
   }
   subTotal[0] = p1SubTotal;
   subTotal[1] = p2SubTotal;
@@ -223,20 +229,27 @@ function updateTotal () {
   var p1Total = 0;
   var p2Total = 0;
   for(var i=0; i<12; i++){
-    p1Total += score[0][i];
-    p2Total += score[1][i];
+    if(score[0][i] != -1){
+      p1Total += score[0][i];
+    }
+    if(score[1][i] != -1){
+      p2Total += score[1][i];
+    }
   }
   p1Total += bonus[0];
   p2Total += bonus[1];
+
+  total[0] = p1Total;
+  total[1] = p2Total;
 }
 
 function setScore(num){
   expectedScore = calcScore()
-  if(score[turn % 2 - 1][num] != -1) {
+  if(score[(turn + 1) % 2][num] != -1) {
     return;
   }
 
-  score[turn % 2 - 1][num] = expectedScore[num];
+  score[(turn + 1) % 2][num] = expectedScore[num];
   
   updateBonus();
   updateSubTotal();
@@ -260,8 +273,6 @@ router.route('/join').post(
   function (req, res) {
     if(nowPlayerNum < 2) {
       if(req.session.user){
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
-        return;
       }
       else{
         if(nowPlayerNum == 0){
@@ -274,15 +285,10 @@ router.route('/join').post(
           "id": nowPlayerNum,
           "name": req.body.id
         }
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
         nowPlayerNum++;
-        return;
       }
     }
-    else{
-      res.render('maypeople');
-      return;
-    }
+    res.redirect('/room')
   }
 );
 
@@ -303,7 +309,7 @@ router.route('/roll').post(
         }
         chance--;
         roll(keepArray);
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
+        res.redirect('/room')
       }
       // res.render('room')
     }
@@ -322,28 +328,35 @@ router.route('/roll').post(
         }
         roll(keepArray);
         chance--;
-        res.render('room', { p1: p1name, p2: p2name, dice: dice });
+        res.redirect('/room')
       }
       // res.render('room')
     }
     else{
-      res.render('room', { p1: p1name, p2: p2name, dice: dice });
+      res.redirect('/room')
     }
-    res.render('room', { p1: p1name, p2: p2name, dice: dice });
+    res.redirect('/room')
+  }
+)
+
+router.route('/setScore/:scoreNum').get(
+  function (req, res) {
+    if(req.session.user.name == p1name && turn%2 == 1) {  // player 1
+      setScore(req.params.scoreNum)
+    }
+    else if (req.session.user.name == p2name && turn%2 == 0) {  // player 2
+      setScore(req.params.scoreNum)
+    }
+    console.log(score)
+    res.redirect('/room')
+  }
+)
+
+router.route('/room').get(
+  function (req, res) {
+    calcScoreDummy = (turn%2==0) ? [new Array(12), calcScore()] : [calcScore(), new Array(12)]
+    res.render('room', { p1: p1name, p2: p2name, dice: dice, chance: chance, score, calcScoreDummy, subTotal, total, bonus, turn });
   }
 )
 
 module.exports = router;
-
-router.route('/tempMain').get(
-  function(req,res) {
-    res.render('temp')
-    return
-  }
-)
-
-router.route('/temp').post(
-  function (req, res) {
-    console.log(req.body)
-  }
-)

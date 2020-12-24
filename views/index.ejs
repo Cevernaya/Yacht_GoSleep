@@ -8,52 +8,94 @@
             box-sizing: border-box;
         }
         body {
-            background-color: black;
-            color: white;
             margin: 5px;
+            background-image: url("dice-wallpaper.jpg");
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+        #container {
+            margin: 20px auto 0 auto;
+            width: 500px;
+            padding-bottom: 40px;
+            border: 3px solid black;
+            border-radius: 14px;
+            backdrop-filter: blur(3px);
+            background-color: rgba(255,255,255,.6);
         }
         header {
-            width: fit-content;
-            font-size: 36px;
+            width: 500px;
+            text-align: center;
+            font-size: 48px;
+            font-weight: 900;
+            padding-top: 50px;
         }
         .hcenter-align {
             margin: auto;
         }
+        body main {
+            padding: 20px;
+        }
         body fieldset {
             width: 400px;
+            height: 50px;
             padding: 10px;
             position: relative;
+            border: 3px solid black;
+            border-radius: 4px;
+            background-color: rgba(120,120,120,.5);
         }
         body main input {
             width: 300px;
-            vertical-align: top;
+            height: 24px;
+            border: none;
+            font-size: 22px;
+            background-color: rgba(255,255,255,0);
+        }
+        body main input:focus {
+            outline: none;
+        }
+        body main input::placeholder {
+            font-size: 22px;
+            color: rgb(70, 70, 70);
         }
         body main button {
+            height: 24px;
             position: absolute;
-            right: 10px;
-            vertical-align: top;
+            right: 15px;
+            font-size: 20px;
+            border: none;
+            background-color: rgba(255,255,255,0);
+            cursor: pointer;
+            padding: 0;
+        }
+        body main button:focus {
+            outline: none;
         }
         #player {
-            margin-top: 30px;
-            margin-bottom: 30px;
-            width: 150px;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            width: 170px;
+            font-size: 24px;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
-    <header class="hcenter-align">
-        Online YACHT
-    </header>
-    <main>
-        <div id="player" class="hcenter-align">
-            <span>현재 참여자 : <%= playerNum %></span>
-        </div>
-        <fieldset class="hcenter-align">
-            <form action="/join" method="post">
-                <input name="id" placeholder="ID">
-                <button>Join</button>
-            </form>
-        </fieldset>
-    </main>
+    <div id="container">
+        <header class="hcenter-align">
+            Online Yacht
+        </header>
+        <main>
+            <div id="player" class="hcenter-align">
+                <span>현재 참여자 : <%= playerNum %></span>
+            </div>
+            <fieldset id="joinBox" class="hcenter-align">
+                <form action="/join" method="post">
+                    <input name="id" placeholder="ID">
+                    <button><img src="arrowsmall.png"></i></button>
+                </form>
+            </fieldset>
+        </main>
+    </div>
 </body>
 </html>
